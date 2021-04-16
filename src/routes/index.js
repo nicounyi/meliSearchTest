@@ -1,11 +1,9 @@
-const express = require("express");
-const app = express();
+const { Router } = require("express");
 const axios = require("axios");
+const router = Router();
 
-app.set("json spaces", 2);
-
- // Separo los decimales
- const decimal = a => {
+// Separo los decimales
+const decimal = (a) => {
   let tempPrice = a.toString().split(".");
   if (isNaN(parseInt(tempPrice[1]))) {
     return 00;
@@ -14,8 +12,7 @@ app.set("json spaces", 2);
   }
 };
 
-
-app.get("/api/items", (req, res) => {
+router.get("/api/items", (req, res) => {
   const item = req.query.q;
   const url = "https://api.mercadolibre.com/sites/MLA/search?q=" + item;
   const getItems = async (url) => {
@@ -64,7 +61,7 @@ app.get("/api/items", (req, res) => {
         };
         newResult.items.push(tempItem);
       });
-      res.json( newResult );
+      res.json(newResult);
     } catch (error) {
       console.log(error);
     }
@@ -72,46 +69,42 @@ app.get("/api/items", (req, res) => {
   getItems(url);
 });
 
-app.get("/api/items/:id", (req, res) => {
-
+router.get("/api/items/:id", (req, res) => {
   const idItem = req.params.id;
   const item = "https://api.mercadolibre.com/items/" + idItem;
   const itemdes = "https://api.mercadolibre.com/items/" + idItem + "/description";
 
   const getItemAndDesc = async (a, b) => {
-     try {
-       const itemReq = await axios.get(a);
-       const descriptionReq =  await axios.get(b);
-       // Creo el objeto con la nueva respuesta
-        let newResult = {
-          author: {
-            name: "Nicolas",
-            lastName: "Unyicio",
+    try {
+      const itemReq = await axios.get(a);
+      const descriptionReq = await axios.get(b);
+      // Creo el objeto con la nueva respuesta
+      let newResult = {
+        author: {
+          name: "Nicolas",
+          lastName: "Unyicio",
+        },
+        item: {
+          id: itemReq.data.id,
+          title: itemReq.data.title,
+          price: {
+            currency: itemReq.data.currency_id,
+            amount: itemReq.data.price,
+            decimal: decimal(itemReq.data.price),
           },
-          item : {
-            "id": itemReq.data.id,
-            "title": itemReq.data.title,
-            "price": {
-              "currency": itemReq.data.currency_id,
-              "amount": itemReq.data.price,
-              "decimal":  decimal(itemReq.data.price)
-            },
-            "picture": itemReq.data.pictures[0].secure_url,
-            "condition": itemReq.data.condition,
-            "sold_quantity": itemReq.data.sold_quantity,
-            "description": descriptionReq.data.plain_text
-          }
-        };
+          picture: itemReq.data.pictures[0].secure_url,
+          condition: itemReq.data.condition,
+          sold_quantity: itemReq.data.sold_quantity,
+          description: descriptionReq.data.plain_text,
+        },
+      };
 
-       res.json(newResult);
-     } catch (error) {
-       console.log(error);
-     }
-   };
-   getItemAndDesc(item, itemdes);
-
+      res.json(newResult);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  getItemAndDesc(item, itemdes);
 });
 
-app.listen("8010", () => {
-  console.log("Server in 8010");
-});
+module.exports = router;
