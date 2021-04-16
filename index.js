@@ -64,7 +64,7 @@ app.get("/api/items", (req, res) => {
         };
         newResult.items.push(tempItem);
       });
-      res.json({ newResult });
+      res.json( newResult );
     } catch (error) {
       console.log(error);
     }
@@ -103,7 +103,7 @@ app.get("/api/items/:id", (req, res) => {
           }
         };
 
-       res.json({ newResult });
+       res.json(newResult);
      } catch (error) {
        console.log(error);
      }
