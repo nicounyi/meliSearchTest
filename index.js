@@ -4,6 +4,16 @@ const axios = require("axios");
 
 app.set("json spaces", 2);
 
+ // Separo los decimales
+ const decimal = (a) => {
+  let tempPrice = a.toString().split(".");
+  if (isNaN(parseInt(tempPrice[1]))) {
+    return 00;
+  } else {
+    return parseInt(tempPrice[1]);
+  }
+};
+
 app.get("/api/items", (req, res) => {
   const url = "https://api.mercadolibre.com/sites/MLA/search?q=" + req.query.q;
   const getData = async (url) => {
@@ -35,15 +45,6 @@ app.get("/api/items", (req, res) => {
         let price = {};
         // Recorro los precios
         item.prices.prices.forEach((value) => {
-          // Separo los decimales
-          const decimal = (a) => {
-            let tempPrice = a.toString().split(".");
-            if (isNaN(parseInt(tempPrice[1]))) {
-              return 00;
-            } else {
-              return parseInt(tempPrice[1]);
-            }
-          };
           price = {
             currency: value.currency_id,
             amount: value.amount,
@@ -79,15 +80,6 @@ app.get("/api/items/:id", (req, res) => {
      try {
        const itemReq = await axios.get(a);
        const descriptionReq =  await axios.get(b);
-        // Separo los decimales
-        const decimal = (a) => {
-          let tempPrice = a.toString().split(".");
-          if (isNaN(parseInt(tempPrice[1]))) {
-            return 00;
-          } else {
-            return parseInt(tempPrice[1]);
-          }
-        };
        // Creo el objeto con la nueva respuesta
         let newResult = {
           author: {
