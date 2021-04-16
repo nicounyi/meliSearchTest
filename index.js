@@ -5,7 +5,7 @@ const axios = require("axios");
 app.set("json spaces", 2);
 
  // Separo los decimales
- const decimal = (a) => {
+ const decimal = a => {
   let tempPrice = a.toString().split(".");
   if (isNaN(parseInt(tempPrice[1]))) {
     return 00;
@@ -14,9 +14,11 @@ app.set("json spaces", 2);
   }
 };
 
+
 app.get("/api/items", (req, res) => {
-  const url = "https://api.mercadolibre.com/sites/MLA/search?q=" + req.query.q;
-  const getData = async (url) => {
+  const item = req.query.q;
+  const url = "https://api.mercadolibre.com/sites/MLA/search?q=" + item;
+  const getItems = async (url) => {
     try {
       const response = await axios.get(url);
       const data = response.data;
@@ -67,7 +69,7 @@ app.get("/api/items", (req, res) => {
       console.log(error);
     }
   };
-  getData(url);
+  getItems(url);
 });
 
 app.get("/api/items/:id", (req, res) => {
@@ -76,7 +78,7 @@ app.get("/api/items/:id", (req, res) => {
   const item = "https://api.mercadolibre.com/items/" + idItem;
   const itemdes = "https://api.mercadolibre.com/items/" + idItem + "/description";
 
-  const getData = async (a, b) => {
+  const getItemAndDesc = async (a, b) => {
      try {
        const itemReq = await axios.get(a);
        const descriptionReq =  await axios.get(b);
@@ -106,7 +108,7 @@ app.get("/api/items/:id", (req, res) => {
        console.log(error);
      }
    };
-  getData(item, itemdes);
+   getItemAndDesc(item, itemdes);
 
 });
 
