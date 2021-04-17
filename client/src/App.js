@@ -1,4 +1,5 @@
 import logo from './logo.svg';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.scss';
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         >
           Learn React
         </a>
+        <button className="btn btn-info">asdas</button>
       </header>
     </div>
   );
