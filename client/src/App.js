@@ -1,17 +1,24 @@
-import React, { Fragment, useState } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Styles/main.scss'
 
 
 //Components
-import SearchBar from './Components/SearchBar'
+import ItemsFounds from './Components/ItemsFounds'
+import Home from './Components/Home'
 
 function App() {
   return (
-    <Fragment>
-      <SearchBar/>
-    </Fragment>
+    <>
+      <Router>
+        <Switch>
+          <Route path='/' component={Home} exact />
+          <Route path='/items' component={ItemsFounds} />  
+        </Switch>
+      </Router>
+    </>
   );
 }
 
