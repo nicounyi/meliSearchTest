@@ -6,8 +6,9 @@ import './Styles/main.scss'
 
 
 //Components
-import ItemsFounds from './Components/ItemsFounds'
-import Home from './Components/Home'
+import Item from './Views/Item'
+import ItemsList from './Views/ItemsList'
+import Home from './Views/Home'
 
 function App() {
   return (
@@ -15,7 +16,9 @@ function App() {
       <Router>
         <Switch>
           <Route path='/' component={Home} exact />
-          <Route path='/items' component={ItemsFounds} />  
+          <Route path='/items/:item' component={Item} />  
+          <Route path='/items' component={ItemsList} />  
+          
         </Switch>
       </Router>
     </>
