@@ -18,6 +18,7 @@ const SearchBar = () => {
       history.push({ pathname: "/" });
     } else {
       history.push({ pathname: "/items", search: "?search=" + input });
+      
     }
   };
 
