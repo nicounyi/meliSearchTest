@@ -5,7 +5,6 @@ const Home = () => {
     return ( 
         <>
             <SearchBar/>
-            <p>Test home</p>
         </>
      );
 }

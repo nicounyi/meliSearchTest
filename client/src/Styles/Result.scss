@@ -1,4 +1,35 @@
 //Componente Resultado
 .item-list {
     background-color: $color-white;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    &__row {
+        padding-top: 1em;
+        padding-bottom: 1em;
+    }
+    &__img {
+        max-width: 180px;
+        height: 180px;
+        border-radius: 4px;
+    }
+    &__price {
+        font-size: 1.5rem;
+        margin-bottom: 32px;
+        display: flex;
+        align-items: center;
+        &--free-shipping {
+            display: flex;
+            margin-left: .5em;
+        }
+    }
+    &__title {
+        font-size: 1.125rem;
+    }
+    &__adress {
+        position: absolute;
+    top: 5px;
+    right: 5%;
+    font-size: .75rem;
+        color: $color-grey
+    }
 }

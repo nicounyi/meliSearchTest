@@ -17,39 +17,36 @@ const Item = () => {
 
   useEffect(() => {
     async function searchItems() {
-      // You can await here
       const response = await axios
         .get(`http://localhost:8010/api/items?q=:` + result)
         .then((res) => {
-          if (res.status === 200) {
-            console.log(res.data);
             setItems(res.data.items);
             setLoading(false);
-          }
         })
         .catch((err) => {
           console.error(err);
         });
     }
     searchItems();
-  }, [result, loading]);
+  }, [result]);
 
   return (
     <>
-      <SearchBar/>
-      <Breadcrumb categories="" />
-      {loading && (
-        <div className="container">
+      <SearchBar />
+      <Breadcrumb/>
+
+      <div className="container item-list mb-5">
+        {loading && (
           <div className="row">
             <div className="col-12 text-center">
               <p>Cargando</p>
             </div>
           </div>
-        </div>
-      )}
-      {items.slice(0, 4).map((item) => (
-        <Result key={item.id} item={item} />
-      ))}
+        )}
+        {items.slice(0, 4).map((item) => (
+          <Result key={item.id} item={item} />
+        ))}
+      </div>
     </>
   );
 };

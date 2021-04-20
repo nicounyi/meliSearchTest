@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 import mainLogo from "../img/Logo_ML.png";
 import searchImg from "../img/ic_Search.png";
@@ -31,11 +31,13 @@ const SearchBar = () => {
               <div className="col-12 p-md-0">
                 <form onSubmit={submitAction}>
                   <div className="input-group">
+                  <Link to={"/"} className="nolink">
                     <img
                       src={mainLogo}
                       className="search-bar__mainLogo"
                       alt="Mercado libre"
                     />
+                    </Link>
                     <input
                       type="text"
                       className="form-control search-bar__input"
