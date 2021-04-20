@@ -46,8 +46,8 @@ router.get("/api/items", (req, res) => {
         item.prices.prices.forEach((value) => {
           price = {
             currency: value.currency_id,
-            amount: value.amount,
-            decimals: decimal(value.amount),
+            amount: item.price,
+            decimals: decimal(item.price),
           };
         });
         // Creo un objeto para ir llenando la data final
@@ -58,6 +58,7 @@ router.get("/api/items", (req, res) => {
           picture: item.thumbnail,
           condition: item.condition,
           free_shipping: item.shipping.free_shipping,
+          adress: item.address.state_name
         };
         newResult.items.push(tempItem);
       });
