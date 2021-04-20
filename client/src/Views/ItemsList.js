@@ -20,8 +20,8 @@ const Item = () => {
       const response = await axios
         .get(`http://localhost:8010/api/items?q=:` + result)
         .then((res) => {
-            setItems(res.data.items);
-            setLoading(false);
+          setItems(res.data.items);
+          setLoading(false);
         })
         .catch((err) => {
           console.error(err);
@@ -33,20 +33,28 @@ const Item = () => {
   return (
     <>
       <SearchBar />
-      <Breadcrumb/>
-
-      <div className="container item-list mb-5">
-        {loading && (
-          <div className="row">
-            <div className="col-12 text-center">
-              <p>Cargando</p>
-            </div>
+      {items.length > 0 && (
+        <div>
+          <Breadcrumb />
+          <div className="container item-list mb-5">
+            {loading && (
+              <div className="row">
+                <div className="col-12 text-center">
+                  <p>Cargando</p>
+                </div>
+              </div>
+            )}
+            {items.slice(0, 4).map((item) => (
+              <Result key={item.id} item={item} />
+            ))}
           </div>
-        )}
-        {items.slice(0, 4).map((item) => (
-          <Result key={item.id} item={item} />
-        ))}
-      </div>
+        </div>
+      )}
+      {items.length === 0 && (
+        <div className="container item-list mb-5 mt-5 text-center">
+          No se encontraron resultados
+        </div>
+      )}
     </>
   );
 };
