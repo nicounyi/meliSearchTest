@@ -4,7 +4,7 @@ import { useHistory, Link } from "react-router-dom";
 import mainLogo from "../img/Logo_ML.png";
 import searchImg from "../img/ic_Search.png";
 
-const SearchBar = () => {
+const SearchBar = ({changeStateLoading}) => {
   const urlParams = new URLSearchParams(window.location.search);
   const result = urlParams.get("search") || "";
   const [input, setInput] = useState("" || result);
@@ -18,7 +18,7 @@ const SearchBar = () => {
       history.push({ pathname: "/" });
     } else {
       history.push({ pathname: "/items", search: "?search=" + input });
-      
+      changeStateLoading(true);
     }
   };
 

@@ -8,7 +8,6 @@ import './Styles/main.scss'
 //Components
 import Item from './Views/Item'
 import ItemsList from './Views/ItemsList'
-import Home from './Views/Home'
 
 function App() {
   return (

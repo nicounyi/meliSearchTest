@@ -12,16 +12,16 @@ const Item = () => {
   const result = query.get("search");
 
   const [items, setItems] = useState([]);
+  const [isLoading, setisLoading] = useState(true);
   const [categories, setCategories] = useState("");
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function searchItems() {
-      const response = await axios
+      await axios
         .get(`http://localhost:8010/api/items?q=:` + result)
         .then((res) => {
           setItems(res.data.items);
-          setLoading(false);
+          setisLoading(false);
         })
         .catch((err) => {
           console.error(err);
@@ -32,27 +32,25 @@ const Item = () => {
 
   return (
     <>
-      <SearchBar />
-      {items.length > 0 && (
+      <SearchBar changeStateLoading={(isLoading) => setisLoading(isLoading)} />
+      {isLoading && (
+        <div className="container item-list mb-5 mt-5 text-center">
+          <p>Cargando...</p>
+        </div>
+      )}
+      {items.length < 1 && result !== null && !isLoading && (
+        <div className="container item-list mb-5 mt-5 text-center">
+          <p>No se encontraron resultados para {result}</p>
+        </div>
+      )}
+      {items.length > 0 && !isLoading && (
         <div>
           <Breadcrumb />
           <div className="container item-list mb-5">
-            {loading && (
-              <div className="row">
-                <div className="col-12 text-center">
-                  <p>Cargando</p>
-                </div>
-              </div>
-            )}
             {items.slice(0, 4).map((item) => (
               <Result key={item.id} item={item} />
             ))}
           </div>
-        </div>
-      )}
-      {items.length === 0 && (
-        <div className="container item-list mb-5 mt-5 text-center">
-          No se encontraron resultados
         </div>
       )}
     </>
