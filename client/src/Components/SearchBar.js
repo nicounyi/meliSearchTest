@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import mainLogo from "../img/Logo_ML.png";
 import searchImg from "../img/ic_Search.png";
 
-const SearchBar = ({changeStateLoading}) => {
+const SearchBar = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const result = urlParams.get("search") || "";
   const [input, setInput] = useState("" || result);
@@ -18,9 +18,13 @@ const SearchBar = ({changeStateLoading}) => {
       history.push({ pathname: "/" });
     } else {
       history.push({ pathname: "/items", search: "?search=" + input });
-      changeStateLoading(true);
     }
   };
+
+  const goToHome = () => {
+    history.push({ pathname: "/" });
+    setInput("");
+  }
 
   return (
     <>
@@ -31,13 +35,12 @@ const SearchBar = ({changeStateLoading}) => {
               <div className="col-12 p-md-0">
                 <form onSubmit={submitAction}>
                   <div className="input-group">
-                  <Link to={"/"} className="nolink">
                     <img
                       src={mainLogo}
                       className="search-bar__mainLogo"
                       alt="Mercado libre"
+                      onClick={() => goToHome()}
                     />
-                    </Link>
                     <input
                       type="text"
                       className="form-control search-bar__input"
