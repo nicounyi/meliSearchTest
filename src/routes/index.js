@@ -1,6 +1,10 @@
 const { Router } = require("express");
 const axios = require("axios");
 const router = Router();
+const author =  {
+  name: "Nicolas",
+  lastName: "Unyicio",
+};
 
 // Separo los decimales
 const decimal = (a) => {
@@ -21,10 +25,7 @@ router.get("/api/items", (req, res) => {
       const data = response.data;
       // Creo el objeto con la nueva respuesta
       let newResult = {
-        author: {
-          name: "Nicolas",
-          lastName: "Unyicio",
-        },
+        author,
         categories: [],
         items: [],
       };
@@ -39,29 +40,34 @@ router.get("/api/items", (req, res) => {
         });
       });
       // Recorro los resultados para generar los items
-      data.results.forEach((item) => {
-        //Creo el objeto price
-        let price = {};
-        // Recorro los precios
-        item.prices.prices.forEach((value) => {
-          price = {
-            currency: value.currency_id,
-            amount: item.price,
-            decimals: decimal(item.price),
+      if (data.results !== undefined){
+        data.results.forEach((item) => {
+          //Creo el objeto price
+          let price = {};
+          // Recorro los precios
+          if(item.prices.prices !== undefined){
+            item.prices.prices.forEach((value) => {
+              price = {
+                currency: value.currency_id,
+                amount: item.price,
+                decimals: decimal(item.price),
+              };
+            });
+          }
+          // Creo un objeto para ir llenando la data final
+          let tempItem = {
+            id: item.id,
+            title: item.title,
+            price: price,
+            picture: item.thumbnail,
+            condition: item.condition,
+            free_shipping: item.shipping.free_shipping,
+            adress: item.address.state_name
           };
+          newResult.items.push(tempItem);
         });
-        // Creo un objeto para ir llenando la data final
-        let tempItem = {
-          id: item.id,
-          title: item.title,
-          price: price,
-          picture: item.thumbnail,
-          condition: item.condition,
-          free_shipping: item.shipping.free_shipping,
-          adress: item.address.state_name
-        };
-        newResult.items.push(tempItem);
-      });
+      }
+      
       res.json(newResult);
     } catch (error) {
       console.log(error);
@@ -81,10 +87,7 @@ router.get("/api/items/:id", (req, res) => {
       const descriptionReq = await axios.get(b);
       // Creo el objeto con la nueva respuesta
       let newResult = {
-        author: {
-          name: "Nicolas",
-          lastName: "Unyicio",
-        },
+        author,
         item: {
           id: itemReq.data.id,
           title: itemReq.data.title,

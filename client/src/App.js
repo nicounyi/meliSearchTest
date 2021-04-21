@@ -6,19 +6,19 @@ import './Styles/main.scss'
 
 
 //Components
+import SearchBar from './Components/SearchBar'
 import Item from './Views/Item'
 import ItemsList from './Views/ItemsList'
-import Home from './Views/Home'
 
 function App() {
   return (
     <>
       <Router>
+      <SearchBar />
         <Switch>
-          <Route path='/' component={Home} exact />
+          <Route path='/' component={ItemsList} exact />
           <Route path='/items/:item' component={Item} />  
           <Route path='/items' component={ItemsList} />  
-          
         </Switch>
       </Router>
     </>
