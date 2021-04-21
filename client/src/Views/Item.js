@@ -8,11 +8,13 @@ const ItemFounds = () => {
   const [objeto, setItems] = useState([]);
   const [price, setPrice] = useState("");
   const [condition, setCondition] = useState("");
+  const [isLoading, setisLoading] = useState(false);
 
   const { item } = useParams();
 
   useEffect(() => {
     async function searchItems() {
+      setisLoading(true);
       await axios
         .get(`http://localhost:8010/api/items/` + item)
         .then((res) => {
@@ -31,13 +33,21 @@ const ItemFounds = () => {
         .catch((err) => {
           console.error(err);
         });
+        setisLoading(false);
     }
     searchItems();
   }, [item]);
   return (
     <>
       <Breadcrumb />
-      <div className="container item-details">
+      {isLoading && (
+        <div className="container item-list mb-5 mt-5 text-center">
+          <p>Cargando...</p>
+        </div>
+      )}
+      {
+        !isLoading && (
+          <div className="container item-details">
         <div className="row">
           <div className="col-12 col-lg-7">
           <img src={objeto.picture} className="img-fluid" alt={objeto.title} />
@@ -55,6 +65,9 @@ const ItemFounds = () => {
           </div>
         </div>
       </div>
+        ) 
+      }
+    
     </>
   );
 };
