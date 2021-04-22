@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { connect } from "react-redux";
 
 import mainLogo from "../img/Logo_ML.png";
 import searchImg from "../img/ic_Search.png";
 
-const SearchBar = () => {
+const SearchBar = ({saveKey}) => {
   const urlParams = new URLSearchParams(window.location.search);
   const result = urlParams.get("search") || "";
   const [input, setInput] = useState("" || result);
@@ -18,6 +19,7 @@ const SearchBar = () => {
       history.push({ pathname: "/" });
     } else {
       history.push({ pathname: "/items", search: "?search=" + input });
+      //saveKey(input);
     }
   };
 
@@ -68,4 +70,19 @@ const SearchBar = () => {
   );
 };
 
-export default SearchBar;
+const mapStateToProp = state => {
+  return {
+    searchKey : state.searchKey
+  }
+}
+
+const mapDispatchToProp = dispatch => ({
+  saveKey(value) {
+    dispatch({
+      type: "SAVE_KEY",
+      value
+    })
+  }
+});
+
+export default connect(mapStateToProp, mapDispatchToProp)(SearchBar);

@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import axios from "axios";
+
+
 
 import { useLocation } from "react-router-dom";
 import Result from "../Components/Result";
 import Breadcrumb from "../Components/Breadcrumb";
 
-const Item = () => {
+const Item = ({saveCategories}) => {
   const location = useLocation();
   const query = new URLSearchParams(location.search);
   const result = query.get("search");
 
   const [items, setItems] = useState([]);
   const [isLoading, setisLoading] = useState(false);
-  const [categories, setCategories] = useState("");
 
   useEffect(() => {
     async function searchItems() {
@@ -21,6 +23,7 @@ const Item = () => {
         .get(`http://localhost:8010/api/items?q=:` + result)
         .then((res) => {
           setItems(res.data.items);
+          saveCategories(res.data.categories);
         })
         .catch((err) => {
           console.error(err);
@@ -30,9 +33,6 @@ const Item = () => {
     searchItems();
   }, [result]);
 
-  useEffect(() => {
-
-  }, [])
 
   return (
     <>
@@ -60,4 +60,22 @@ const Item = () => {
   );
 };
 
-export default Item;
+
+
+const mapStateToProp = state => {
+  return {
+    searchKey : state.categories
+  }
+}
+
+const mapDispatchToProp = dispatch => ({
+  saveCategories(value) {
+    dispatch({
+      type: "SAVE_CATEGORIES",
+      value
+    })
+  }
+});
+
+export default connect(mapStateToProp, mapDispatchToProp)(Item);
+
