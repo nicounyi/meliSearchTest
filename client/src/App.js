@@ -1,5 +1,8 @@
 import React from 'react';
+import {Provider} from "react-redux"
+import store from "./store"
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Styles/main.scss'
@@ -13,6 +16,7 @@ import ItemsList from './Views/ItemsList'
 function App() {
   return (
     <>
+    <Provider store={store}>
       <Router>
       <SearchBar />
         <Switch>
@@ -21,6 +25,7 @@ function App() {
           <Route path='/items' component={ItemsList} />  
         </Switch>
       </Router>
+      </Provider>
     </>
   );
 }
