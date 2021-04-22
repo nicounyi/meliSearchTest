@@ -27,18 +27,17 @@ const SearchBar = ({saveKey, saveApiData}) => {
       // Fix para que no repitan la busqueda y que la api no se ejecute muchas veces
       history.push({ pathname: "/items", search: "?search=" + input });
       saveKey(input);
-      
     }
   };
 
   useEffect(() => {
+    saveApiData([]);
     if(re !== "" && re !== null) {
       async function searchItems() {
         setisLoading(true);
         await axios
           .get(`http://localhost:8010/api/items?q=:` + re)
           .then((res) => {
-            //saveCategories(res.data.categories);
             saveApiData(res.data);
           })
           .catch((err) => {
@@ -48,7 +47,6 @@ const SearchBar = ({saveKey, saveApiData}) => {
       }
       searchItems();
     }
-    console.log(re);
   }, [re]);
 
   const goToHome = () => {

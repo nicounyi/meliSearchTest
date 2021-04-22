@@ -17,11 +17,11 @@ const Item = ({apiData}) => {
     <>
     {items !== undefined && (
       <>
-      {/* {items.length < 1 && result !== null && (
+       {items.length < 1 && (
         <div className="container item-list mb-5 mt-5 text-center">
-          <p>No se encontraron resultados para {result}</p>
+          <p>No se encontraron resultados para </p>
         </div>
-      )} */}
+      )} 
       {items.length > 0 && (
         <div>
           <Breadcrumb />
