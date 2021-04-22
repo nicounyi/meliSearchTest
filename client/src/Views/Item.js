@@ -37,6 +37,11 @@ const ItemFounds = () => {
     }
     searchItems();
   }, [item]);
+
+  const numberWithCommas = number => {
+    return number.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ".");
+  }
+
   return (
     <>
       <Breadcrumb />
@@ -57,7 +62,7 @@ const ItemFounds = () => {
           <div className="col-12 col-lg-5">
           {condition} - {objeto.sold_quantity} Vendidos
           <h2>{objeto.title}</h2>
-          <p>$ {price}</p>
+          <p>$ {numberWithCommas(price)}</p>
           </div>
         </div>
         <div className="row">

@@ -19,7 +19,7 @@ const Item = ({apiData}) => {
       <>
        {items.length < 1 && (
         <div className="container item-list mb-5 mt-5 text-center">
-          <p>No se encontraron resultados para </p>
+          <p>No se encontraron resultados </p>
         </div>
       )} 
       {items.length > 0 && (
