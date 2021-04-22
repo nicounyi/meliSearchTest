@@ -41,8 +41,10 @@ const ItemFounds = () => {
     <>
       <Breadcrumb />
       {isLoading && (
-        <div className="container item-list mb-5 mt-5 text-center">
-          <p>Cargando...</p>
+        <div className="container mb-5 mt-5 text-center">
+          <div className="loadingio-spinner-rolling-l2425b256vp"><div className="ldio-39zx2rku61l">
+                        <div></div>
+                        </div></div>
         </div>
       )}
       {
