@@ -1,31 +1,60 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
+import axios from "axios";
 
 import mainLogo from "../img/Logo_ML.png";
 import searchImg from "../img/ic_Search.png";
 
-const SearchBar = ({saveKey}) => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const result = urlParams.get("search") || "";
-  const [input, setInput] = useState("" || result);
+const SearchBar = ({saveKey, saveApiData}) => {
+
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+  const re = query.get("search");
+
+  const [input, setInput] = useState("" || re);
+  const [isLoading, setisLoading] = useState(false);
 
   const isEmpty = (str) => !str.trim().length;
   const history = useHistory();
+
 
   const submitAction = (e) => {
     e.preventDefault();
     if (isEmpty(input)) {
       history.push({ pathname: "/" });
-    } else {
+    } else { 
+      // Fix para que no repitan la busqueda y que la api no se ejecute muchas veces
       history.push({ pathname: "/items", search: "?search=" + input });
-      //saveKey(input);
+      saveKey(input);
+      
     }
   };
+
+  useEffect(() => {
+    if(re !== "" && re !== null) {
+      async function searchItems() {
+        setisLoading(true);
+        await axios
+          .get(`http://localhost:8010/api/items?q=:` + re)
+          .then((res) => {
+            //saveCategories(res.data.categories);
+            saveApiData(res.data);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+          setisLoading(false);
+      }
+      searchItems();
+    }
+    console.log(re);
+  }, [re]);
 
   const goToHome = () => {
     history.push({ pathname: "/" });
     setInput("");
+    saveApiData([]);
   }
 
   return (
@@ -52,11 +81,18 @@ const SearchBar = ({saveKey}) => {
                     />
                     <div className="input-group-append">
                       <button className="search-bar__button" type="submit">
-                        <img
+                        {isLoading && (
+                        <div className="loadingio-spinner-rolling-l2425b256vp"><div className="ldio-39zx2rku61l">
+                        <div></div>
+                        </div></div>
+                        )}
+                        {!isLoading && (
+                          <img
                           src={searchImg}
                           className="search-bar__button--img"
                           alt="Imagen de busqueda"
                         />
+                        )}
                       </button>
                     </div>
                   </div>
@@ -72,7 +108,8 @@ const SearchBar = ({saveKey}) => {
 
 const mapStateToProp = state => {
   return {
-    searchKey : state.searchKey
+    searchKey : state.searchKey,
+    apiData: state.apiData
   }
 }
 
@@ -81,6 +118,12 @@ const mapDispatchToProp = dispatch => ({
     dispatch({
       type: "SAVE_KEY",
       value
+    })
+  },
+  saveApiData(data) {
+    dispatch({
+      type: "SAVE_APIDATA",
+      data
     })
   }
 });

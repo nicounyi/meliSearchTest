@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
 
-const Breadcrumb = ({categories}) => {
-  console.log(categories);
+const Breadcrumb = ({apiData}) => {
+ //console.log(apiData);
   return (
     <>
             {/* {categories.map((item) => (
@@ -26,7 +26,7 @@ const Breadcrumb = ({categories}) => {
 
 const mapStateToProp = state => {
   return {
-    categories : state.categories
+    apiData : state.apiData,
   }
 }
 

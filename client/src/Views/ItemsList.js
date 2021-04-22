@@ -1,52 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import axios from "axios";
-
-
-
-import { useLocation } from "react-router-dom";
 import Result from "../Components/Result";
 import Breadcrumb from "../Components/Breadcrumb";
 
-const Item = ({saveCategories}) => {
-  const location = useLocation();
-  const query = new URLSearchParams(location.search);
-  const result = query.get("search");
+const Item = ({apiData}) => {
 
   const [items, setItems] = useState([]);
-  const [isLoading, setisLoading] = useState(false);
+
+  const dataRec = apiData;
 
   useEffect(() => {
-    async function searchItems() {
-      setisLoading(true);
-      await axios
-        .get(`http://localhost:8010/api/items?q=:` + result)
-        .then((res) => {
-          setItems(res.data.items);
-          saveCategories(res.data.categories);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-        setisLoading(false);
-    }
-    searchItems();
-  }, [result]);
-
+    setItems(dataRec.items);
+  }, [dataRec]);
 
   return (
     <>
-      {isLoading && (
-        <div className="container item-list mb-5 mt-5 text-center">
-          <p>Buscando...</p>
-        </div>
-      )}
-      {items.length < 1 && result !== null && !isLoading && (
+    {items !== undefined && (
+      <>
+      {/* {items.length < 1 && result !== null && (
         <div className="container item-list mb-5 mt-5 text-center">
           <p>No se encontraron resultados para {result}</p>
         </div>
-      )}
-      {items.length > 0 && !isLoading && (
+      )} */}
+      {items.length > 0 && (
         <div>
           <Breadcrumb />
           <div className="container item-list mb-5">
@@ -56,6 +32,9 @@ const Item = ({saveCategories}) => {
           </div>
         </div>
       )}
+      </>
+    )}
+      
     </>
   );
 };
@@ -64,9 +43,10 @@ const Item = ({saveCategories}) => {
 
 const mapStateToProp = state => {
   return {
-    searchKey : state.categories
+    apiData : state.apiData,
   }
 }
+
 
 const mapDispatchToProp = dispatch => ({
   saveCategories(value) {
