@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 import Breadcrumb from "../Components/Breadcrumb";
+import Button from "../Components/Button"
 
 const ItemFounds = () => {
   const [objeto, setItems] = useState([]);
@@ -20,12 +21,12 @@ const ItemFounds = () => {
         .then((res) => {
           if (res.status === 200) {
             setItems(res.data.item);
-            if(res.data.item.condition === "new") {
+            if (res.data.item.condition === "new") {
               setCondition("Nuevo");
-            } 
-            if(res.data.item.condition === "used") {
+            }
+            if (res.data.item.condition === "used") {
               setCondition("Usado");
-            } 
+            }
             //Fix for price
             setPrice(res.data.item.price.amount);
           }
@@ -33,48 +34,63 @@ const ItemFounds = () => {
         .catch((err) => {
           console.error(err);
         });
-        setisLoading(false);
+      setisLoading(false);
     }
     searchItems();
   }, [item]);
 
-  const numberWithCommas = number => {
+  const numberWithCommas = (number) => {
     return number.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ".");
-  }
+  };
 
   return (
     <>
       <Breadcrumb />
       {isLoading && (
         <div className="container mb-5 mt-5 text-center">
-          <div className="loadingio-spinner-rolling-l2425b256vp"><div className="ldio-39zx2rku61l">
-                        <div></div>
-                        </div></div>
+          <div className="loadingio-spinner-rolling-l2425b256vp">
+            <div className="ldio-39zx2rku61l">
+              <div></div>
+            </div>
+          </div>
         </div>
       )}
-      {
-        !isLoading && (
-          <div className="container item-details">
-        <div className="row">
-          <div className="col-12 col-lg-7">
-          <img src={objeto.picture} className="img-fluid" alt={objeto.title} />
+      {!isLoading && (
+        <div className="container item-details">
+          <div className="row">
+            <div className="col-12 col-lg-8">
+              <img
+                src={objeto.picture}
+                className="item-details__imgProduct"
+                alt={objeto.title}
+              />
+            </div>
+            <div className="col-12 col-lg-4">
+              <div className="item-details__conditionAndSold">
+                <span>{condition} - {objeto.sold_quantity} Vendidos</span>
+              </div>
+              <div className="item-details__title">
+                <h2>{objeto.title}</h2>
+              </div>
+              <div className="item-details__price">
+              <span>$ {numberWithCommas(price)}</span>
+              </div>
+              <div className="item-details__button">
+                <Button
+                  text="Comprar"
+                  style="primary"
+                />
+              </div>
+            </div>
           </div>
-          <div className="col-12 col-lg-5">
-          {condition} - {objeto.sold_quantity} Vendidos
-          <h2>{objeto.title}</h2>
-          <p>$ {numberWithCommas(price)}</p>
+          <div className="row item-details__desc">
+            <div className="col-12 mt-5">
+              <h2>Descripción del producto</h2>
+              <p>{objeto.description}</p>
+            </div>
           </div>
         </div>
-        <div className="row">
-          <div className="con-12 mt-5">
-            <h2>Descripción del producto</h2>
-            <p>{objeto.description}</p>
-          </div>
-        </div>
-      </div>
-        ) 
-      }
-    
+      )}
     </>
   );
 };
