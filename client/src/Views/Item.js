@@ -82,7 +82,7 @@ const ItemFounds = () => {
               <div className="item-details__button">
                 <Button
                   text="Comprar"
-                  style="primary"
+                  styleBtn="primary"
                 />
               </div>
             </div>
