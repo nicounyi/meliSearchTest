@@ -6,11 +6,11 @@ import axios from "axios";
 import mainLogo from "../img/Logo_ML.png";
 import searchImg from "../img/ic_Search.png";
 
-const SearchBar = ({saveKey, saveApiData}) => {
+const SearchBar = ({saveKey, saveApiData, saveCategories}) => {
 
   const location = useLocation();
   const query = new URLSearchParams(location.search);
-  const re = query.get("search");
+  const re = query.get("search") || "";
 
   const [input, setInput] = useState("" || re);
   const [isLoading, setisLoading] = useState(false);
@@ -31,6 +31,7 @@ const SearchBar = ({saveKey, saveApiData}) => {
   };
 
   useEffect(() => {
+    //Fix that
     saveApiData([]);
     if(re !== "" && re !== null) {
       async function searchItems() {
@@ -38,7 +39,9 @@ const SearchBar = ({saveKey, saveApiData}) => {
         await axios
           .get(`http://localhost:8010/api/items?q=:` + re)
           .then((res) => {
+            console.log(res);
             saveApiData(res.data);
+            saveCategories(res.data.categories);
           })
           .catch((err) => {
             console.error(err);
@@ -122,6 +125,12 @@ const mapDispatchToProp = dispatch => ({
     dispatch({
       type: "SAVE_APIDATA",
       data
+    })
+  },
+  saveCategories(categories) {
+    dispatch({
+      type: "SAVE_CATEGORIES",
+      categories
     })
   }
 });

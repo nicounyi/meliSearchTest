@@ -1,7 +1,9 @@
 import { createStore } from 'redux'
 
 const initialState = {
+    searchKey : "",
     apiData: [],
+    categories: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -11,7 +13,18 @@ const reducer = (state = initialState, action) => {
             apiData: action.data
         }
     }
-    
+    if (action.type === "SAVE_KEY") {
+        return {
+            ...state,
+            searchKey: action.value
+        }
+    }
+    if (action.type === "SAVE_CATEGORIES") {
+        return {
+            ...state,
+            categories: action.categories
+        }
+    }
     return state
 }
 

@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 
 
-const Breadcrumb = ({apiData}) => {
- console.log(apiData.categories);
+const Breadcrumb = ({savedCategories}) => {
 
  const [categories, setCategories] = useState([]);
- const apiCategories = apiData.categories;
+ const apiCategories = savedCategories;
 
  useEffect(() => {
   setCategories(apiCategories);
@@ -15,17 +14,17 @@ const Breadcrumb = ({apiData}) => {
   return (
     <>
       <div className="container breadcrumbCategories">
-        <nav aria-label="breadcrumb">
-          <ol className="breadcrumb">
+        <div className="row">
+        <ol className="breadcrumb breadcrumb-meli">
             {categories !== undefined && 
             <>
               {categories.map((item) => (
-                <li className="breadcrumb-item">{item}</li>
+                <li className="breadcrumb-item" key={item}>{item}</li>
                ))}
               </> 
             }
           </ol>
-        </nav>
+        </div>         
       </div>
     </>
   );
@@ -33,8 +32,9 @@ const Breadcrumb = ({apiData}) => {
 
 
 const mapStateToProp = state => {
+  console.log(state);
   return {
-    apiData : state.apiData,
+    savedCategories : state.categories,
   }
 }
 

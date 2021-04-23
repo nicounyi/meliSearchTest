@@ -7,6 +7,10 @@
         padding-top: 1em;
         padding-bottom: 1em;
     }
+    &__imgCont {
+        padding: 0;
+        max-width: 205px;
+    }
     &__img {
         max-width: 180px;
         height: 180px;
