@@ -6,11 +6,11 @@
 git clone https://github.com/nicounyi/meliSearchTest.git
 ```
 
-Importante! Antes de instalar, revisar si se esta usando una version de node superior a la 10
+Importante! Antes de instalar, revisar si se está usando una versión de node superior a la 10
 
 2) Instalar dependencias
 
-El backend del proyecto esta dentro de la carpeta /src/ . Una vez alli instalar dependencias con:
+El backend del proyecto está dentro de la carpeta /src/ . Una vez allí instalar dependencias con:
 
 ```bash
 npm install
@@ -18,7 +18,7 @@ npm install
 
 3) Instalar dependencias del frontend
 
-El frontend se encuentra en la carpeta /client/ .  Una vez alli instalar dependencias de igual manera:
+El frontend se encuentra en la carpeta /client/ .  Una vez allí instalar dependencias de igual manera:
 
 ```bash
 npm install
@@ -47,7 +47,7 @@ Elegí hacerlo de esta manera para poder trabajar de una manera mas prolija.
 
 El backend esta hecho con node y express, y se ubica en el puerto 8010 para que no genere conflictos con puertos de uso comun como el 3000 o el 9000. 
 
-El frontend se desarrollo con react, utilizando la estructura de create-react-app. El mismo se divide en vistas y componentes. Las vistas son ItemList que contiene los resultados hechos por la busqueda e Item que muestra la información del producto seleccionado.
+El frontend se desarrolló con react, utilizando la estructura de create-react-app. El mismo se divide en vistas y componentes. Las vistas son ItemList que contiene los resultados hechos por la busqueda e Item que muestra la información del producto seleccionado.
 
 Luego tenemos los componentes:
 
