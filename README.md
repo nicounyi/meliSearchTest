@@ -9,6 +9,8 @@ Test tecnico para Mercado Libre
 git clone https://github.com/nicounyi/meliSearchTest.git
 ```
 
+Importante! Antes de instalar, revisar si se esta usando una version de node superior a la 10
+
 2) Instalar dependencias
 
 El backend del proyecto esta dentro de la carpeta /src/ . Una vez alli instalar dependencias con:
