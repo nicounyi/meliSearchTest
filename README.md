@@ -1,6 +1,3 @@
-# meliSearchTest
-Test tecnico para Mercado Libre
-
 # Como instalar el proyecto
 
 1) Clonar el repo 
@@ -60,6 +57,3 @@ Luego tenemos los componentes:
 - Button: Componente de boton que permite agregar un nuevo botón en la app.
 
 El flujo de la app se basa en que cada vez que el componente SearchBar recibe o genera una nueva busqueda, el componente item list lista los resultados que le llegan del store global, dicho store se manega con la libreria Redux, lo mismo sucede con el componente Breadcrumb. Cuando se selecciona un item, se ingresa a la vista Item donde se genera la url usando como parametro el ID del producto.
-
-
-
