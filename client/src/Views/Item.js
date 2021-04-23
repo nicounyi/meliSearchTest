@@ -58,7 +58,7 @@ const ItemFounds = () => {
       {!isLoading && (
         <div className="container item-details">
           <div className="row">
-            <div className="col-12 col-lg-8">
+            <div className="col-12 col-lg-8 item-details__imgProductCont text-center">
               <img
                 src={objeto.picture}
                 className="item-details__imgProduct"

@@ -14,8 +14,8 @@ const Breadcrumb = ({savedCategories}) => {
   return (
     <>
       <div className="container breadcrumbCategories">
-        <nav aria-label="breadcrumb">
-          <ol className="breadcrumb">
+        <div className="row">
+        <ol className="breadcrumb breadcrumb-meli">
             {categories !== undefined && 
             <>
               {categories.map((item) => (
@@ -24,7 +24,7 @@ const Breadcrumb = ({savedCategories}) => {
               </> 
             }
           </ol>
-        </nav>
+        </div>         
       </div>
     </>
   );
