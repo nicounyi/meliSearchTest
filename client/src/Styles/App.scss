@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+body {
+  background-color: $color-lightGrey;
+}
+.nolink {
+  color: inherit;
+}
+.nolink:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+$breadcrumb-divider: quote(">");
+.breadcrumb-item + .breadcrumb-item::before {
+  content: $breadcrumb-divider;
+}

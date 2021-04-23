@@ -1,0 +1,67 @@
+//Componente SearchBar
+.search-bar{
+    background-color: $color-yellow;
+    padding-top: .55em;
+    padding-bottom: 0.55em;
+    &__mainLogo {
+        margin-right: 1.5em;
+        cursor: pointer;
+    }
+    &__input {
+        border: 0 !important;
+        border-top-left-radius: 3px !important;
+        border-bottom-left-radius: 3px !important;
+        &::placeholder {
+            color: $color-grey !important
+        }
+    }
+    
+    &__button {
+        width: 38px;
+        height: 38px;
+        border: 0;
+        background-color: $color-lightGrey;
+        border-top-right-radius: 3px !important;
+        border-bottom-right-radius: 3px !important;
+        &--img {
+
+        }
+    }
+  }
+
+ //Libreria para animacion de cargando
+
+  @keyframes ldio-39zx2rku61l {
+    0% { transform: translate(-50%,-50%) rotate(0deg); }
+    100% { transform: translate(-50%,-50%) rotate(360deg); }
+  }
+  .ldio-39zx2rku61l div {
+    position: absolute;
+    width: 52px;
+    height: 52px;
+    border: 18px solid #999999;
+    border-top-color: transparent;
+    border-radius: 50%;
+  }
+  .ldio-39zx2rku61l div {
+    animation: ldio-39zx2rku61l 1s linear infinite;
+    top: 50px;
+    left: 50px
+  }
+  .loadingio-spinner-rolling-l2425b256vp {
+    width: 24px;
+    height: 28px;
+    display: inline-block;
+    overflow: hidden;
+    background: none;
+    padding-top: 5px;
+  }
+  .ldio-39zx2rku61l {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform: translateZ(0) scale(0.24);
+    backface-visibility: hidden;
+    transform-origin: 0 0; 
+  }
+  .ldio-39zx2rku61l div { box-sizing: content-box; }
