@@ -42,6 +42,7 @@ const SearchBar = ({saveKey, saveApiData, saveCategories}) => {
             console.log(res);
             saveApiData(res.data);
             saveCategories(res.data.categories);
+            localStorage.setItem("categorias", JSON.stringify(res.data.categories));
           })
           .catch((err) => {
             console.error(err);

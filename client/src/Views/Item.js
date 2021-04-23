@@ -21,6 +21,7 @@ const ItemFounds = () => {
         .then((res) => {
           if (res.status === 200) {
             setItems(res.data.item);
+            localStorage.setItem("itemId", JSON.stringify(item));
             if (res.data.item.condition === "new") {
               setCondition("Nuevo");
             }
