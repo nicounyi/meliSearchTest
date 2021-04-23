@@ -9,6 +9,7 @@ const Breadcrumb = ({ savedCategories }) => {
   const localItemId = JSON.parse(localStorage.getItem("itemId"));
   const localCategories = JSON.parse(localStorage.getItem("categorias"));
 
+  // Pequeño fix, al no tener las categorias en la api de Item, si el id de la url es igual al id que se guardo en el storage se setea esas categorias
   if (categories.length === 0 && item === localItemId) {
     setCategories(localCategories);
   }

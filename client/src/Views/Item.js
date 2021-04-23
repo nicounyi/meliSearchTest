@@ -6,11 +6,12 @@ import Breadcrumb from "../Components/Breadcrumb";
 import Button from "../Components/Button"
 
 const ItemFounds = () => {
+
   const [objeto, setItems] = useState([]);
   const [price, setPrice] = useState("");
   const [condition, setCondition] = useState("");
   const [isLoading, setisLoading] = useState(false);
-
+  // Obtengo el Id de la url
   const { item } = useParams();
 
   useEffect(() => {
@@ -20,6 +21,7 @@ const ItemFounds = () => {
         .get(`http://localhost:8010/api/items/` + item)
         .then((res) => {
           if (res.status === 200) {
+            // Guardo los items en el state
             setItems(res.data.item);
             localStorage.setItem("itemId", JSON.stringify(item));
             if (res.data.item.condition === "new") {
@@ -28,7 +30,7 @@ const ItemFounds = () => {
             if (res.data.item.condition === "used") {
               setCondition("Usado");
             }
-            //Fix for price
+            //Precio en un estado ya que se presentaba un undefined
             setPrice(res.data.item.price.amount);
           }
         })
@@ -40,6 +42,7 @@ const ItemFounds = () => {
     searchItems();
   }, [item]);
 
+  // Precio con "."
   const numberWithCommas = (number) => {
     return number.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ".");
   };

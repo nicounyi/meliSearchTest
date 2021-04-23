@@ -8,22 +8,23 @@ import searchImg from "../img/ic_Search.png";
 
 const SearchBar = ({saveKey, saveApiData, saveCategories}) => {
 
+  // Obtengo el query String para la busqueda
   const location = useLocation();
   const query = new URLSearchParams(location.search);
   const re = query.get("search") || "";
 
+  // Si no hay query string, se presenta un bug entonces se inicia vacio o con el valor del input
   const [input, setInput] = useState("" || re);
   const [isLoading, setisLoading] = useState(false);
 
+  // Funcion para chequear si el input esta vacio
   const isEmpty = (str) => !str.trim().length;
+  // Uso el hook useHistory para pushear el query sting
   const history = useHistory();
-
 
   const submitAction = (e) => {
     e.preventDefault();
-    if (isEmpty(input)) {
-      history.push({ pathname: "/" });
-    } else { 
+    if (!isEmpty(input)) { 
       // Fix para que no repitan la busqueda y que la api no se ejecute muchas veces
       history.push({ pathname: "/items", search: "?search=" + input });
       saveKey(input);
@@ -31,7 +32,7 @@ const SearchBar = ({saveKey, saveApiData, saveCategories}) => {
   };
 
   useEffect(() => {
-    //Fix that
+    // Cada vez que se cambie el query string que manda el input, se ejecuta la api de busqueda
     saveApiData([]);
     if(re !== "" && re !== null) {
       async function searchItems() {
@@ -39,9 +40,10 @@ const SearchBar = ({saveKey, saveApiData, saveCategories}) => {
         await axios
           .get(`http://localhost:8010/api/items?q=:` + re)
           .then((res) => {
-            console.log(res);
+            // Guardo en el store la data y las catagorias
             saveApiData(res.data);
             saveCategories(res.data.categories);
+            // Guardo las categorias en el localstorage por si refresca la pagina en la vista del item
             localStorage.setItem("categorias", JSON.stringify(res.data.categories));
           })
           .catch((err) => {
@@ -53,6 +55,7 @@ const SearchBar = ({saveKey, saveApiData, saveCategories}) => {
     }
   }, [re]);
 
+  // Funcion que vuelve al home y setea las cosas en blanco
   const goToHome = () => {
     history.push({ pathname: "/" });
     setInput("");
@@ -115,6 +118,7 @@ const mapStateToProp = state => {
   }
 }
 
+// Dispatch para guardar en el store
 const mapDispatchToProp = dispatch => ({
   saveKey(value) {
     dispatch({

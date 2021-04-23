@@ -7,9 +7,11 @@ const Item = ({apiData}) => {
 
   const [items, setItems] = useState([]);
 
+  //Obtengo los items desde el store de la app
   const dataRec = apiData;
 
   useEffect(() => {
+    // Cada vez que la url o el searchbar cambia el query string que genera una nueva busqueda, se vuelve a setear los items
     setItems(dataRec.items);
   }, [dataRec]);
 
